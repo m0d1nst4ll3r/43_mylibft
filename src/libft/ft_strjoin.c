@@ -6,13 +6,13 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 09:45:24 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/10 13:54:17 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:44:12 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(t_libmlc **libmlc, const char *s1, const char *s2)
 {
 	char	*new;
 	size_t	i;
@@ -20,9 +20,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!new)
-		return (new);
+	new = libmlc_malloc(libmlc, ft_strlen(s1) + ft_strlen(s2) + 1);
 	i = 0;
 	while (s1[i])
 	{

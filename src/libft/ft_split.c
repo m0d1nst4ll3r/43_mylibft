@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 09:56:41 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/10/15 23:17:08 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:44:40 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static size_t	count_words(const char *s, char c)
 	return (count);
 }
 
-static char	*create_string(const char *s, char c)
+static char	*create_string(t_libmlc **libmlc, const char *s, char c)
 {
 	size_t	i;
 	char	*new;
@@ -41,9 +41,7 @@ static char	*create_string(const char *s, char c)
 	i = 0;
 	while (s[i] && s[i] != c)
 		i++;
-	new = malloc(i + 1);
-	if (!new)
-		return (new);
+	new = libmlc_malloc(libmlc, i + 1);
 	i = 0;
 	while (s[i] && s[i] != c)
 	{
@@ -54,14 +52,7 @@ static char	*create_string(const char *s, char c)
 	return (new);
 }
 
-static void	free_all(char **new, unsigned int count)
-{
-	while (count--)
-		free(new[count]);
-	free(new);
-}
-
-static int	fill_words(const char *s, char c, char **new)
+static int	fill_words(t_libmlc **libmlc, const char *s, char c, char **new)
 {
 	size_t	i;
 	size_t	count;
@@ -72,12 +63,7 @@ static int	fill_words(const char *s, char c, char **new)
 	{
 		if (s[i] != c)
 		{
-			new[count] = create_string(s + i, c);
-			if (!new[count])
-			{
-				free_all(new, count);
-				return (1);
-			}
+			new[count] = create_string(libmlc, s + i, c);
 			count++;
 			while (s[i] && s[i] != c)
 				i++;
@@ -89,16 +75,13 @@ static int	fill_words(const char *s, char c, char **new)
 	return (0);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(t_libmlc **libmlc, const char *s, char c)
 {
 	char	**new;
 
 	if (!s)
 		return (NULL);
-	new = malloc(sizeof(*new) * (count_words(s, c) + 1));
-	if (!new)
-		return (new);
-	if (fill_words(s, c, new))
-		return (NULL);
+	new = libmlc_malloc(libmlc, sizeof(*new) * (count_words(s, c) + 1));
+	fill_words(libmlc, s, c, new);
 	return (new);
 }

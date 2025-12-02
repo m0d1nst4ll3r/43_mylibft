@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 16:54:39 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:47:47 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <stddef.h>
+# include "libmalloc.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
 
@@ -33,18 +34,17 @@ void	*ft_memcpy(void *d, const void *s, size_t n);
 
 size_t	ft_strlcpy(char *d, const char *s, size_t n);
 char	*ft_strcat(char *d, const char *s);
-char	*ft_strdup(const char *s);
-char	*ft_strndup(const char *s, size_t n);
+char	*ft_strdup(t_libmlc **libmlc, const char *s);
+char	*ft_strndup(t_libmlc **libmlc, const char *s, size_t n);
 
 void	ft_strlower(char *s);
 void	ft_strupper(char *s);
 void	ft_strrev(char *s);
 
 int		ft_atoi(const char *s);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strtrim(const char *s, const char *set);
-char	**ft_split(const char *s, char c);
-char	*ft_itoa(int n);
+char	*ft_substr(t_libmlc **libmlc, const char *s, unsigned int start, size_t len);
+char	*ft_strjoin(t_libmlc **libmlc, const char *s1, const char *s2);
+char	**ft_split(t_libmlc **libmlc, const char *s, char c);
+char	*ft_itoa(t_libmlc **libmlc, int n);
 
 #endif

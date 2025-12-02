@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:08:51 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 16:56:51 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:46:11 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ static void	itoa_recurse(char *new, long n, int i)
 	new[i] = n % 10 + '0';
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(t_libmlc **libmlc, int n)
 {
 	char	*new;
 	int		len;
 
 	len = itoa_get_len(n);
-	new = malloc(len + 1);
-	if (!new)
-		return (new);
+	new = libmlc_malloc(libmlc, len + 1);
 	itoa_recurse(new, n, len - 1);
 	new[len] = 0;
 	return (new);
