@@ -10,6 +10,4 @@ Contains:
 
 - printf (and fprintf)
 
-Might add:
-
 - libmalloc
