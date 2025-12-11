@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2025/11/29 16:23:19 by rapohlen         ###   ########.fr        #
+#    Updated: 2025/12/11 16:36:18 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC_LIBFT	= $(addprefix $(LIBFTDIR), \
 			  ft_strupper.c ft_strlower.c ft_strrev.c \
 			  ft_atoi.c ft_strdup.c ft_strndup.c \
 			  ft_substr.c ft_strjoin.c ft_split.c ft_itoa.c \
-			  ft_abs.c ft_min.c ft_max.c)
+			  ft_abs.c ft_min.c ft_max.c \
+			  ft_write.c)
 SRC_PRINTF	= $(addprefix $(PRINTDIR), \
 			  ft_printf.c buffer.c flags.c \
 			  convert.c convert_c.c convert_s.c convert_di.c convert_boux.c convert_p.c \
