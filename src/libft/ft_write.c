@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 16:11:48 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/11 16:24:45 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:50:47 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	ft_write(int fd, char *s, int len)
 	offset = 0;
 	while (1)
 	{
-		ret = write(fd, input->line + offset, len);
+		ret = write(fd, s + offset, len);
 		if (ret == len)
-			return (1);
-		else if (ret == -1 || ++attempts >= WR_TIMEOUT)
+			return (0);
+		else if (ret == -1 || ++attempts >= LIBFT_WRITE_TIMEOUT)
 			return (1);
 		else if (ret)
 		{
