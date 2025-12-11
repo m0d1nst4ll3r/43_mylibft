@@ -6,12 +6,16 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 16:54:39 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/11 16:25:15 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define LIBFT_WRITE_TIMEOUT	10
+# define LIBFT_WRITE_DO_SLEEP	true
+# define LIBFT_WRITE_USLEEP		50
 
 # include <stdlib.h>
 # include <stddef.h>
@@ -46,5 +50,7 @@ char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strtrim(const char *s, const char *set);
 char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
+
+int		ft_write(int fd, char *s, int len);
 
 #endif
