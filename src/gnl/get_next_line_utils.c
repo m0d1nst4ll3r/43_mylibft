@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:48:42 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/13 14:16:48 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:40:30 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,19 @@ int	gnl_get_len(t_gnl_buf *buf, int end_len)
 	return (len);
 }
 
-void	*gnl_clear_buf(t_gnl_buf *buf)
+void	*gnl_clear_buf(t_gnl_buf **buf)
 {
+	t_gnl_buf	*cur;
 	t_gnl_buf	*last;
 
-	while (buf)
+	cur = *buf;
+	while (cur)
 	{
-		last = buf;
-		buf = buf->next;
+		last = cur;
+		cur = cur->next;
 		free(last);
 	}
+	buf = NULL;
 	return (NULL);
 }
 
@@ -82,6 +85,7 @@ void	lst_remove_fd(t_gnl **lst, int fd)
 	}
 	if (to_remove)
 	{
+		gnl_clear_buf(&to_remove->buf);
 		if (to_remove == *lst)
 			*lst = to_remove->next;
 		else
