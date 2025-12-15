@@ -6,13 +6,13 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:48:42 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/15 19:49:06 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/15 20:38:12 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	get_len(t_gnl_buf *buf, int end_len)
+int	gnl_get_len(t_gnl_buf *buf, int end_len)
 {
 	int	len;
 
