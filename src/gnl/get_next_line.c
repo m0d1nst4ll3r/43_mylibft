@@ -6,11 +6,12 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:44:35 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/13 14:42:18 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/15 20:35:09 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static t_gnl_buf	*fill_line(t_gnl_buf *cur, char *line, int end_len)
 {
@@ -35,24 +36,23 @@ static t_gnl_buf	*fill_line(t_gnl_buf *cur, char *line, int end_len)
 	return (cur);
 }
 
-static char	*get_line(t_gnl_buf **buf, int end_len)
+static int	get_line(t_gnl_buf **buf, int end_len, char **line)
 {
 	t_gnl_buf	*cur;
-	char		*line;
 
-	line = malloc(gnl_get_len(*buf, end_len) + 1);
-	if (!line)
-		return (gnl_clear_buf(buf));
-	cur = fill_line(*buf, line, end_len);
+	*line = malloc(gnl_get_len(*buf, end_len) + 1);
+	if (!*line)
+		return (gnl_clear_buf(*buf, line));
+	cur = fill_line(*buf, *line, end_len);
 	if (cur->index + end_len == cur->len)
 	{
 		free(cur);
-		cur = NULL;
+		*buf = NULL;
+		return (1);
 	}
-	else
-		cur->index += end_len;
+	cur->index += end_len;
 	*buf = cur;
-	return (line);
+	return (0);
 }
 
 static int	reached_end(t_gnl_buf *buf, int *end_len)
@@ -62,7 +62,7 @@ static int	reached_end(t_gnl_buf *buf, int *end_len)
 	i = 0;
 	while (buf->index + i < buf->len && buf->buf[buf->index + i] != '\n')
 		i++;
-	if (buf->len < GNL_BSIZE || buf->index + i < buf->len)
+	if (buf->len < BUFFER_SIZE || buf->index + i < buf->len)
 	{
 		*end_len = i;
 		if (buf->index + i < buf->len && buf->buf[buf->index + i] == '\n')
@@ -72,7 +72,7 @@ static int	reached_end(t_gnl_buf *buf, int *end_len)
 	return (0);
 }
 
-static char	*gnl_read_loop(t_gnl *data)
+static int	gnl_read_loop(t_gnl *data, char **line)
 {
 	t_gnl_buf	*cur;
 	t_gnl_buf	*last;
@@ -82,41 +82,35 @@ static char	*gnl_read_loop(t_gnl *data)
 	while (1)
 	{
 		if (cur && reached_end(cur, &end_len))
-			return (get_line(&data->buf, end_len));
+			return (get_line(&data->buf, end_len, line));
 		last = cur;
 		cur = malloc(sizeof(*cur));
 		if (!cur)
-			return (gnl_clear_buf(&data->buf));
+			return (gnl_clear_buf(data->buf, line));
 		if (!data->buf)
 			data->buf = cur;
 		else
 			last->next = cur;
 		cur->next = NULL;
-		cur->len = read(data->fd, cur->buf, GNL_BSIZE);
+		cur->len = read(data->fd, cur->buf, BUFFER_SIZE);
 		if ((!cur->len && cur == data->buf) || cur->len == -1)
-			return (gnl_clear_buf(&data->buf));
+			return (gnl_clear_buf(data->buf, line));
 		cur->index = 0;
 	}
 }
 
-char	*get_next_line(int fd, int mode)
+char	*get_next_line(int fd)
 {
 	static t_gnl	*lst;
 	t_gnl			*current;
 	char			*line;
 
-	if (mode == GNL_FREE)
-	{
-		lst_remove_fd(&lst, fd);
-		return (NULL);
-	}
 	current = lst_find_fd(lst, fd);
 	if (!current)
 		current = lst_add_fd(&lst, fd);
 	if (!current)
 		return (NULL);
-	line = gnl_read_loop(current);
-	if (!line)
+	if (gnl_read_loop(current, &line))
 		lst_remove_fd(&lst, fd);
 	return (line);
 }

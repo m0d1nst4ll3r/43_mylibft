@@ -6,15 +6,16 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:41:35 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/13 14:41:27 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/15 20:34:53 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define GNL_BSIZE	1024
-# define GNL_FREE	1
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE	1024
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -40,7 +41,7 @@
  *	2. Check buffer if any (leftover from last call)
  *		- We are checking for end condition (newline, or EOF)
  *		- EOF condition is recognized by len (read return) being less
- *		   than GNL_BSIZE (meaning read was not full)
+ *		   than BUFFER_SIZE (meaning read was not full)
  *	3. Start reading in a loop, checking buffer every time
  *		- Every new read goes into its own node in the chained list
  *	4. Once end buffer is found, write the line and return
@@ -57,7 +58,7 @@
  *	In this implementation, memory is not optimized for remainders
  *	 from full or partial reads.
  *
- *	  E.g, for GNL_BSIZE of 1024:
+ *	  E.g, for BUFFER_SIZE of 1024:
  *
  *		- For a full read where a newline is found at index 999, there
  *		   only remain 24 bytes, but we are holding 1024 bytes in memory.
@@ -66,13 +67,13 @@
  *		   we are holding 1024 bytes for 1 remaining byte.
  *
  *	This amount of memory will be held until the next call for each
- *	 open fd. The higher GNL_BSIZE is, the more wasted memory.
- *	Therefore, it is highly encouraged to either keep GNL_BSIZE
+ *	 open fd. The higher BUFFER_SIZE is, the more wasted memory.
+ *	Therefore, it is highly encouraged to either keep BUFFER_SIZE
  *	 reasonable or to make sure you are reading files completely.
 */
 typedef struct s_gnl_buf
 {
-	char				buf[GNL_BSIZE];
+	char				buf[BUFFER_SIZE];
 	int					len;
 	int					index;
 	struct s_gnl_buf	*next;
@@ -86,7 +87,7 @@ typedef struct s_gnl
 }	t_gnl;
 
 // lst utils
-void	*gnl_clear_buf(t_gnl_buf **buf);
+int		gnl_clear_buf(t_gnl_buf *buf, char **line);
 t_gnl	*lst_add_fd(t_gnl **lst, int fd);
 t_gnl	*lst_find_fd(t_gnl *lst, int fd);
 void	lst_remove_fd(t_gnl **lst, int fd);
@@ -95,6 +96,6 @@ void	lst_remove_fd(t_gnl **lst, int fd);
 int		gnl_get_len(t_gnl_buf *buf, int end_len);
 
 // core
-char	*get_next_line(int fd, int mode);
+char	*get_next_line(int fd);
 
 #endif

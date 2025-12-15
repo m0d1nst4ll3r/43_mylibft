@@ -6,13 +6,13 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:48:42 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/13 14:40:30 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/15 19:49:06 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	gnl_get_len(t_gnl_buf *buf, int end_len)
+int	get_len(t_gnl_buf *buf, int end_len)
 {
 	int	len;
 
@@ -25,20 +25,18 @@ int	gnl_get_len(t_gnl_buf *buf, int end_len)
 	return (len);
 }
 
-void	*gnl_clear_buf(t_gnl_buf **buf)
+int	gnl_clear_buf(t_gnl_buf *buf, char **line)
 {
-	t_gnl_buf	*cur;
 	t_gnl_buf	*last;
 
-	cur = *buf;
-	while (cur)
+	while (buf)
 	{
-		last = cur;
-		cur = cur->next;
+		last = buf;
+		buf = buf->next;
 		free(last);
 	}
-	buf = NULL;
-	return (NULL);
+	*line = NULL;
+	return (1);
 }
 
 t_gnl	*lst_add_fd(t_gnl **lst, int fd)
@@ -85,7 +83,6 @@ void	lst_remove_fd(t_gnl **lst, int fd)
 	}
 	if (to_remove)
 	{
-		gnl_clear_buf(&to_remove->buf);
 		if (to_remove == *lst)
 			*lst = to_remove->next;
 		else
