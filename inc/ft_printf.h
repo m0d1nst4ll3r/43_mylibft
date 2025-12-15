@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:58:43 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/29 16:00:43 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/15 20:49:36 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_printf
 	int			buf_i;
 	int			str_i;
 	int			tot_i;
-}t_printf;
+}	t_printf;
 
 // utils
 // print - print helpers during conversion
