@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:58 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/16 18:58:21 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:12:43 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ int	ft_atoi_strict(char *s, int *n)
 		return (1);
 	return (0);
 }
-
