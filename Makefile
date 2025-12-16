@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2025/12/15 22:34:33 by rapohlen         ###   ########.fr        #
+#    Updated: 2025/12/16 18:59:39 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ CFILES_LIBFT	= ft_strlen.c \
 				  ft_abs.c \
 				  ft_min.c \
 				  ft_max.c \
-				  ft_write.c
+				  ft_write.c \
+				  ft_atoi_strict.c
 CFILES_PRINTF	= ft_printf.c \
 				  buffer.c \
 				  flags.c \

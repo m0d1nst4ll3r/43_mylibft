@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/11 16:37:58 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:58:38 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
 
 int		ft_write(int fd, char *s, int len);
+int		ft_atoi_strict(char *s, int *n);
 
 #endif
