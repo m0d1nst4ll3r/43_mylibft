@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/16 18:58:38 by rapohlen         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:15:27 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define LIBFT_H
 
 # define LIBFT_WRITE_TIMEOUT	10
-# define LIBFT_WRITE_DO_SLEEP	1
-# define LIBFT_WRITE_USLEEP		50
+# define LIBFT_WRITE_DO_SLEEP	0
+# define LIBFT_WRITE_USLEEP		1000
 
 # include <stdlib.h>
 # include <stddef.h>
