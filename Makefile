@@ -6,10 +6,11 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/01/06 15:13:25 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/01/15 16:06:26 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Source files
 CFILES_LIBFT	= ft_strlen.c \
 				  ft_strchr.c \
 				  ft_strstr.c \
@@ -37,7 +38,8 @@ CFILES_LIBFT	= ft_strlen.c \
 				  ft_max.c \
 				  ft_write.c \
 				  ft_atoi_strict.c \
-				  ft_select_sort.c
+				  ft_select_sort.c \
+				  ft_free.c
 CFILES_PRINTF	= ft_printf.c \
 				  buffer.c \
 				  flags.c \
@@ -57,42 +59,54 @@ LIBFTDIR		= src/libft/
 PRINTDIR		= src/printf/
 GETNLDIR		= src/gnl/
 
-SRC_LIBFT		= $(addprefix $(LIBFTDIR), $(CFILES_LIBFT))
-SRC_PRINTF		= $(addprefix $(PRINTDIR), $(CFILES_PRINTF))
-SRC_GNL			= $(addprefix $(GETNLDIR), $(CFILES_GNL))
+SRC				= $(addprefix $(LIBFTDIR), $(CFILES_LIBFT)) \
+				  $(addprefix $(PRINTDIR), $(CFILES_PRINTF)) \
+				  $(addprefix $(GETNLDIR), $(CFILES_GNL))
 
-SRC				= $(SRC_LIBFT) $(SRC_PRINTF) $(SRC_GNL)
-OBJ				= $(SRC:.c=.o)
-DEP				= $(SRC:.c=.d)
+# Build directory
+BUILDDIR		= .build
 
+# Object and dependency files
+OBJ				= $(SRC:%.c=$(BUILDDIR)/%.o)
+DEP				= $(OBJ:.o=.d)
+
+# Output binary
 NAME			= libft.a
 
-INC				= inc/
+# Header directories
+INC				= inc
 
+# Compiler settings
 CC				= cc
 AR				= ar rcs
 CFLAGS			= -Wall -Wextra -Werror
 CPPFLAGS		= $(addprefix -I,$(INC)) -MMD -MP
 MAKEFLAGS		+= --no-print-directory -j
 
+# Default rule
 all:		$(NAME)
 
+# Create archive from objects
 $(NAME):	$(OBJ)
 			$(AR) $@ $^
 
-%.o:		%.c
+# Compile source -> object (auto-create directories)
+$(BUILDDIR)/%.o:		%.c
+			@mkdir -p $(@D)
 			$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
+# Cleanup
 clean:
-			rm -f $(OBJ) $(DEP)
+			rm -rf $(BUILDDIR)
 
 fclean:
-			rm -f $(NAME) $(OBJ) $(DEP)
+			rm -rf $(NAME) $(BUILDDIR)
 
 re:
 			$(MAKE) fclean
 			$(MAKE) all
 
+# Include dependency files
 -include $(DEP)
 
 .PHONY: clean fclean re
