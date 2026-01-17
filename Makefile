@@ -6,12 +6,14 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/01/17 16:05:36 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/01/17 16:39:00 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 CFILES_LIBFT	= ft_isspace.c \
+				  ft_isdigit.c \
+				  ft_ishexa.c \
 				  ft_strlen.c \
 				  ft_strchr.c \
 				  ft_strstr.c \

@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/17 15:50:52 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:39:13 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "get_next_line.h"
 
 int		ft_isspace(char c);
+int		ft_isdigit(char c);
+int		ft_ishexa(char c);
 
 int		ft_abs(int n);
 int		ft_max(int a, int b);
