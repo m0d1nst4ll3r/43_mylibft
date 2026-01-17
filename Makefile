@@ -6,12 +6,13 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/01/15 16:06:26 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/01/17 16:05:36 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
-CFILES_LIBFT	= ft_strlen.c \
+CFILES_LIBFT	= ft_isspace.c \
+				  ft_strlen.c \
 				  ft_strchr.c \
 				  ft_strstr.c \
 				  ft_strncmp.c \
@@ -81,7 +82,8 @@ CC				= cc
 AR				= ar rcs
 CFLAGS			= -Wall -Wextra -Werror
 CPPFLAGS		= $(addprefix -I,$(INC)) -MMD -MP
-MAKEFLAGS		+= --no-print-directory -j
+MAKEFLAGS		+= --no-print-directory
+MAKEFLAGS		:= $(MAKEFLAGS) $(if $(filter -j%,$(MAKEFLAGS)),,-j)
 
 # Default rule
 all:		$(NAME)

@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/15 15:38:41 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/17 15:50:52 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stddef.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
+
+int		ft_isspace(char c);
 
 int		ft_abs(int n);
 int		ft_max(int a, int b);
