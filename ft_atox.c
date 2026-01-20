@@ -6,16 +6,81 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:14:10 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/20 12:41:03 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:54:44 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*		ft_atox
+#define BASE10 "0123456789"
+
+// Multiplies var by mult, byte-by-byte
+// For now, not detecting overflow. Later, will require size of var to be passed and return will be int to detect overflow.
+// Defaulting to int size.
+static void	mult(unsigned char *var, unsigned char mult)
+{
+	short			tmp;
+	unsigned char	rest;
+	int				i;
+
+	i = 0;
+	rest = 0;
+	while (i < 4)
+	{
+		tmp = var[i] * mult;
+		var[i] = (unsigned char)tmp + rest;
+		rest = tmp >> 8;
+		i++;
+	}
+}
+
+// Adds to var, byte-by-byte
+// For now, not detecting overflow. Later, will require size of var to be passed and return will be int to detect overflow.
+static void	add(unsigned char *var, unsigned char add)
+{
+	unsigned short	to_add;
+	unsigned char	rest;
+	int				i;
+
+	i = 0;
+	rest = 0;
+	to_add = var[i] + add;
+	while (to_add)
+	{
+		var[i] = (unsigned char)to_add;
+		rest = var[i + 1] + (to_add >> 8);
+		i++;
+	}
+}
+
+// A B C D
+// Add
+//
+// Potentially, Add + D is > 255 = does not fit within a byte
+// So, just write whatever fits, in there, then use rest
+//
+// Take 100090
+// 1    1000 0110    1111 1010
+// 1    134          250
+// We want to add 9
+// That would be
+// 1    1000 0111    0000 0011
+// 1    135          3
+// Counting up 9 times
+// 1011
+// 1100
+// 1101
+// 1110
+// 1111
+// 1 0000 0000
+// 1 0000 0001
+// 1 0000 0010
+// 1 0000 0011
+
+/*		ft_atox(char *to_convert, char *base, void *to_write, size_t type_size)
  *
  *	« A marvel of engineering. » - Some Guy
- *		« It simply works. » - ft_atox comment section
+ *		« It simply works. » - 'ft_atox' Comment Section
  *
  * - Converts a string into a signed numerical value
  * - Accepts any base
@@ -24,20 +89,55 @@
  * - It simply works
  *
  *	Args:
- * s		string to convert
- * base		base to convert in - if NULL, defaults to base 10
- * var		variable to write result in
- * size		size of the variable (e.g 4 for int - recommend using sizeof)
+ * to_convert	string to convert
+ * base			base to convert in - if NULL, defaults to base 10
+ * to_write		variable to write result in
+ * type_size	size of the variable (e.g 4 for int - recommend using sizeof)
  *
- *	Return:
+ *	Returns:
  * 0		Success - variable contains conversion result
  * 1		Failure - variable may contain anything
  * Failure happens if there is an overflow or if args are bad
+ *
+ *	To note:
+ * - Preceding spaces, tabs etc... (isspace) are allowed
+ * - Only one '-' or '+' sign is allowed
+ * - If no digits are found, value defaults to 0 (and return is 0)
+ * .. See atox_strict for a stricter version
 */
 int	ft_atox(char *s, char *base, void *var, size_t size)
 {
+	int	neg;
+	int	i;
+	int	baselen;
+
+	// /!\   W.I.P !!!   /!\
+	// For now, ignoring neg
+	// For now, not testing overflow
 	if (!s || !var || !size)
 		return (1);
+	if (!base)
+		base = BASE10;
+	ft_memset(var, 0, 4);
+	baselen = ft_strlen(base);
+	i = 0;
+	neg = 1;
+	while (ft_isspace(s[i]))
+		i++;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		i++;
+		if (s[i] == '-')
+			neg = -1;
+	}
+	while (s[i] && ft_strchr(base, s[i]))
+	{
+		mult(var, baselen);
+		ft_printf("Step %d: %d\n", i, *(int *)var);
+		add(var, ft_strchr(base, s[i]) - base);
+		ft_printf("Step %d: %d\n", i, *(int *)var);
+		i++;
+	}
 	return (0);
 }
 
@@ -115,97 +215,9 @@ int	ft_atox(char *s, char *base, void *var, size_t size)
 // But -3 is all 1's then 01
 // 0 times -1 stays 0 so that doesn't work
 
-
-
 // Progress!
 
-
-
-
 // Reminder, we can handle base len up to 256, not 255
-
-
-
-// multiply value, start by assuming int
-// OK - we've got byte-by-byte multiplication down
-void	test2(void *sth, unsigned char mult)
-{
-	unsigned char	*a;
-	int				tmp;
-	int				rest;
-	int				i;
-
-	i = 0;
-	rest = 0;
-	a = sth;
-	while (i < 4)
-	{
-		tmp = a[i] * mult;
-		ft_printf("i[%d]: %d x %d = %d (binary %b) - casted value %b\n", i, a[i], mult, tmp, tmp, (char)tmp);
-		a[i] = (char)tmp + rest;
-		rest = tmp >> 8;
-		ft_printf("rest is %b\n", rest);
-		i++;
-	}
-}
-
-void	test2_add(void *sth, unsigned char add)
-{
-	unsigned char	*a;
-	int				tmp;
-	int				rest;
-	int				i;
-
-	i = 0;
-	a = sth;
-	rest = 0;
-	while (rest || (!i && !rest))
-	{
-		tmp = a[i] + add;
-		a[i] = (char)tmp + rest;
-		rest = tmp >> 8;
-		i++;
-	}
-}
-
-// NOW we need to add the new value, on the index
-// Let's start with base 10 so it's easier
-// s will only contain digits and be positive for now
-// WORKS!!
-void	test3(char *s, void *sth)
-{
-	unsigned char	*a;
-	int				i;
-
-	//need to fill sth with 0's
-	ft_memset(sth, 0, 4);
-	i = 0;
-	a = sth;
-	while (s[i])
-	{
-		// so here we need to mult and then add. for now we mult by 10, but later it will be baselen.
-		// we mult the ENTIRE value by baselen, essentially we do what we did in test2 (we'll just be calling it here)
-		// by the way... mult operation needs to tell us if we're trying to write too far into our value (overflow)
-		// but then we also need to add the new thing
-		// to add byte by byte, we just keep going until there is no rest
-		// we need a loop like mult, and this ALSO needs to be protected against overflow.
-		test2(sth, 10);
-		test2_add(sth, s[i] - '0');
-		i++;
-	}
-}
-
-void	little_test(void *sth, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_printf("%d: %hhb\n", i, ((char *)sth)[i]);
-		i++;
-	}
-}
 
 int	main(int ac, char **av)
 {
@@ -213,6 +225,6 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (0);
-	test3(av[1], &i);
-	ft_printf("After test3: %d\n", i);
+	ft_atox(av[1], 0, &i, 4);
+	ft_printf("Result: %d\n", i);
 }
