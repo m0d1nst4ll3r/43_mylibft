@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/19 15:29:54 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/23 12:51:12 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,36 @@
 # define LIBFT_WRITE_DO_SLEEP	0
 # define LIBFT_WRITE_USLEEP		1000
 
+# define BASE2		"01"
+# define BASE8		"01234567"
+# define BASE10		"0123456789"
+# define BASE16		"0123456789abcdef"
+
+// FT_ATOX MACROS
+// 17 Unsigned / Signed
+# define ATOX_U		0x00010000
+# define ATOX_S		0
+// 18 Ignore base case
+# define ATOX_CASE	0x00020000
+// 19 Allow spaces
+# define ATOX_SPA	0x00040000
+// 20 Allow plus
+# define ATOX_PLUS	0x00080000
+// 21 Allow multi-sign
+# define ATOX_MULT	0x00100000
+// 22 Allow base prefix
+# define ATOX_PREF	0x00200000
+// 23 Allow preceding zeros
+# define ATOX_ZERO	0x00400000
+// 24 Allow absent number
+# define ATOX_ABS	0x00800000
+// 25 Allow trailing characters
+# define ATOX_TR	0x01000000
+// Allow all
+# define ATOX_LAX	0x01fe0000
+// Forbid all
+# define ATOX_STRICT	0
+
 # include <stdlib.h>
 # include <stddef.h>
 # include "ft_printf.h"
@@ -25,13 +55,16 @@
 int		ft_isspace(char c);
 int		ft_isdigit(char c);
 int		ft_ishexa(char c);
+int		ft_islower(char c);
+int		ft_isupper(char c);
 
 int		ft_abs(int n);
 int		ft_max(int a, int b);
 int		ft_min(int a, int b);
 
 size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchr(char *s, char c);
+char	*ft_strchr_case(char *s, char c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strstr(const char *b, const char *l);

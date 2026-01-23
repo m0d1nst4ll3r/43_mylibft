@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/01/19 15:30:04 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/01/23 12:56:23 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,11 @@
 CFILES_LIBFT	= ft_isspace.c \
 				  ft_isdigit.c \
 				  ft_ishexa.c \
+				  ft_islower.c \
+				  ft_isupper.c \
 				  ft_strlen.c \
 				  ft_strchr.c \
+				  ft_strchr_case.c \
 				  ft_strstr.c \
 				  ft_strncmp.c \
 				  ft_strcmp.c \

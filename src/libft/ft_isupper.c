@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 13:46:46 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 12:51:44 by rapohlen         ###   ########.fr       */
+/*   Created: 2026/01/23 12:47:01 by rapohlen          #+#    #+#             */
+/*   Updated: 2026/01/23 12:52:55 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(char *s, char c)
+int	ft_isupper(char c)
 {
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (s + i);
-		i++;
-	}
-	if (s[i] == c)
-		return (s + i);
-	return (NULL);
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	return (0);
 }
