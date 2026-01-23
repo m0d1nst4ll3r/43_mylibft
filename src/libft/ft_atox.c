@@ -1,63 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atox.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 14:04:41 by rapohlen          #+#    #+#             */
+/*   Updated: 2026/01/23 18:11:07 by rapohlen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-// Multiplies var by mult, byte-by-byte
-// Detects overflow depending on sign
-static int	mult(unsigned char *var, unsigned char mult, unsigned short size)
+// Skips ALL preceding characters according to params
+static void	skip_preceding(t_atox *d)
 {
-	short			tmp;
-	unsigned char	rest;
-	int				i;
-
-	i = 0;
-	rest = 0;
-	while (i < size)
+	while (d->skip_spaces && ft_isspace(*d->str))
+		d->str++;
+	while (d->multiple_signs && ((d->is_signed && *d->str == '-')
+			|| (d->skip_plus && *d->str == '+')))
 	{
-		tmp = var[i] * mult;
-		var[i] = (unsigned char)tmp + rest;
-		rest = tmp >> 8;
-		i++;
+		if (*d->str == '-')
+			d->neg = !d->neg;
+		d->str++;
 	}
-	if (rest)
-		return (1);
-	return (0);
-}
-
-// Adds to var, byte-by-byte
-// Detects overflow depending on sign
-static int	add(unsigned char *var, unsigned short add, unsigned short size)
-{
-	int				i;
-
-	i = 0;
-	while (add)
+	if ((d->is_signed && *d->str == '-') || (d->skip_plus && *d->str == '+'))
 	{
-		if (i == size)
-			return (1); // overflow
-		add = var[i] + add;
-		var[i] = (unsigned char)add;
-		add = add >> 8;
-		i++;
+		if (*d->str == '-')
+			d->neg = !d->neg;
+		d->str++;
 	}
-	return (0);
-}
-
-// Returns NULL if error
-static char	*skip_parse(char *s, int baselen, int params, int *neg)
-{
-	return (s);
+	if (d->skip_prefix && *d->str == '0'
+		&& ((d->baselen == 2 && (d->str[1] == 'b' || d->str[1] == 'B'))
+			|| (d->baselen == 16 && (d->str[1] == 'x' || d->str[1] == 'X'))))
+		d->str += 2;
+	else if (d->skip_prefix && d->baselen == 8 && *d->str == '0')
+		d->str++;
+	while (d->skip_zeros && *d->str == '0')
+		d->str++;
 }
 
 /*		ft_atox(char *to_convert, char *base, void *to_write, int params)
  *
  * - Converts a string into a signed or unsigned numerical value
- * - Accepts any base (up to 255 length)
+ * - Accepts any base (up to 256 length)
  * - Accepts any type (char, intmax_t, custom type... up to 65535 length)
  * - Wards against overflow, no matter the type, signed/unsigned
  * - Flexible, can tell it to behave one way or another when parsing string
  *	(skip spaces or not, allow multiple preceding signs or not, etc...)
  *
  *	Example usage:
- * ft_atox(str, NULL, &var, sizeof(var) | ATOX_LAX);
+ * ft_atox(str, 0, &var, sizeof(var) | ATOX_LAX);
  * ft_atox(str, "0123456789abcdef", &var, sizeof(var) | ATOX_U | ATOX_CASE);
  *
  *	Args:
@@ -66,12 +59,11 @@ static char	*skip_parse(char *s, int baselen, int params, int *neg)
  * to_write		address of variable to write result in
  * params		size of the variable + params (encoded as one value)
  *
- *	Params:
- * Params contain, in the following bits:
+ *	Params bits:
  * 1-16
  *	The variable's size in short form (recommend using sizeof())
  * 17
- *	0 ATOX_S	Signed conversion
+ *	0 (default)	Signed conversion (use ATOX_S to explicit this)
  *	1 ATOX_U	Unsigned conversion (any preceding '-' is invalid)
  * 18
  *	0 (default)	Base case is respected
@@ -115,63 +107,34 @@ static char	*skip_parse(char *s, int baselen, int params, int *neg)
  *	Notes:
  * - Bases cannot contain '-' and '+' unless they were disabled in params
  * - A preceding '-' is always invalid when reading an unsigned value
- * - Max base length is 255
+ * - Max base length is 256
  * - Max variable size is 65535
 */
-int	ft_atox(char *s, char *base, void *var, int params)
+int	ft_atox(char *str, char *base, void *var, int params)
 {
-	int	neg;
-	int	baselen;
+	t_atox			d;
 
-	if (!s || !var || !(short)params)
-		return (1);
 	if (!base)
 		base = BASE10;
-	baselen = ft_strlen(base);
-	if (baselen > 256)
+	d.baselen = ft_strlen(base);
+	d.varlen = (short)params;
+	if (!str || !var || !d.varlen || d.baselen < 2)
 		return (1);
-	neg = 0;
-	s = skip_parse(s, baselen, params, &neg);
-	if (!s)
-		return (1);
-	ft_memset(var, 0, (short)params);
-	while (*s && ((params & ATOX_CASE && ft_strchr_case(base, *s))
-			|| ft_strchr(base, *s)))
-	{
-		if (mult(var, baselen, (short)params)
-			|| add(var, ft_strchr(base, *s) - base, (short)params))
-			return (1);
-		s++;
-	}
-	return (0);
-}
-
-// Ok big changes
-// Now I have to take all the options I just created into account
-//
-// Also, overflow testing will be different based on sign. If unsigned, it's pretty easy.
-// The difficulty will be signed.
-//
-//
-// Let's start with params
-// So this is just a lot of parsing
-//
-// 1. Spaces
-// 2. Plus/minus (multiple?)
-// 3. Base prefix (if base good?)
-// 4. Zeroes
-// 5. Absent number?
-// 6. Trailing characters?
-
-int	main(int ac, char **av)
-{
-	int	i;
-
-	if (ac != 2)
-		return (0);
-	ft_printf("%p\n", ft_strchr("bcdef", 'a'));
-	if (ft_atox(av[1], 0, &i, 4))
-		ft_printf("Returned error\n");
-	else
-		ft_printf("Result: %d\n", i);
+	d.str = str;
+	d.base = base;
+	d.var = var;
+	d.neg = 0;
+	d.has_digit = 0;
+	d.is_signed = !(params & ATOX_U);
+	d.ignore_case = (params & ATOX_CASE) != 0;
+	d.skip_spaces = (params & ATOX_SPA) != 0;
+	d.skip_plus = (params & ATOX_PLUS) != 0;
+	d.multiple_signs = (params & ATOX_MULT) != 0;
+	d.skip_prefix = (params & ATOX_PREF) != 0;
+	d.skip_zeros = (params & ATOX_ZERO) != 0;
+	d.nonum_ok = (params & ATOX_ABS) != 0;
+	d.allow_extra = (params & ATOX_TR) != 0;
+	skip_preceding(&d);
+	ft_memset(d.var, 0, d.varlen);
+	return (ft_atox_convert(&d));
 }

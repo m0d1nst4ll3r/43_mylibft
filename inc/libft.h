@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 12:51:12 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:02:48 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,27 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
+typedef struct s_atox
+{
+	char			*str;
+	char			*base;
+	char			*base_i;
+	unsigned char	baselen;
+	unsigned char	*var;
+	unsigned short	varlen;
+	int				neg;
+	char			has_digit;
+	char			is_signed;
+	char			ignore_case;
+	char			skip_spaces;
+	char			skip_plus;
+	char			multiple_signs;
+	char			skip_prefix;
+	char			skip_zeros;
+	char			nonum_ok;
+	char			allow_extra;
+}	t_atox;
+
 int		ft_isspace(char c);
 int		ft_isdigit(char c);
 int		ft_ishexa(char c);
@@ -89,10 +110,11 @@ char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
 
 int		ft_write(int fd, char *s, int len);
-int		ft_atoi_strict(char *s, int *n);
-int		ft_atos(char *s, short *n);
-int		ft_atoh(char *s);
 void	ft_select_sort(int *arr, int len);
 void	ft_free(void **p);
+
+// ft_atox extension
+int		ft_atox_convert(t_atox *d);
+int		ft_atox(char *s, char *base, void *var, int params);
 
 #endif
