@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:04:41 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 18:11:07 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:37:48 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,33 @@ static void	skip_preceding(t_atox *d)
 		d->str += 2;
 	else if (d->skip_prefix && d->baselen == 8 && *d->str == '0')
 		d->str++;
-	while (d->skip_zeros && *d->str == '0')
-		d->str++;
+}
+
+static void	init_atox(t_atox *d)
+{
+	d->neg = 0;
+	d->has_digit = 0;
+	d->is_signed = !(d->params & ATOX_U);
+	d->ignore_case = (d->params & ATOX_CASE) != 0;
+	d->skip_spaces = (d->params & ATOX_SPA) != 0;
+	d->skip_plus = (d->params & ATOX_PLUS) != 0;
+	d->multiple_signs = (d->params & ATOX_MULT) != 0;
+	d->skip_prefix = (d->params & ATOX_PREF) != 0;
+	d->skip_zeros = (d->params & ATOX_ZERO) != 0;
+	d->nonum_ok = (d->params & ATOX_ABS) != 0;
+	d->allow_extra = (d->params & ATOX_TR) != 0;
+}
+
+static int	is_base_valid(t_atox d)
+{
+	while (*d.base)
+	{
+		if ((!d.is_signed && *d.base == '-')
+			|| (!d.skip_plus && *d.base == '+'))
+			return (0);
+		d.base++;
+	}
+	return (1);
 }
 
 /*		ft_atox(char *to_convert, char *base, void *to_write, int params)
@@ -123,18 +148,12 @@ int	ft_atox(char *str, char *base, void *var, int params)
 	d.str = str;
 	d.base = base;
 	d.var = var;
-	d.neg = 0;
-	d.has_digit = 0;
-	d.is_signed = !(params & ATOX_U);
-	d.ignore_case = (params & ATOX_CASE) != 0;
-	d.skip_spaces = (params & ATOX_SPA) != 0;
-	d.skip_plus = (params & ATOX_PLUS) != 0;
-	d.multiple_signs = (params & ATOX_MULT) != 0;
-	d.skip_prefix = (params & ATOX_PREF) != 0;
-	d.skip_zeros = (params & ATOX_ZERO) != 0;
-	d.nonum_ok = (params & ATOX_ABS) != 0;
-	d.allow_extra = (params & ATOX_TR) != 0;
+	d.params = params;
+	init_atox(&d);
+	if (!is_base_valid(d))
+		return (1);
 	skip_preceding(&d);
 	ft_memset(d.var, 0, d.varlen);
 	return (ft_atox_convert(&d));
 }
+// LAST ERROR: a single 0 is invalid without ATOX_ZERO
