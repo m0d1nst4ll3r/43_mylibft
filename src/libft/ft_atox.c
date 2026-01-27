@@ -6,36 +6,39 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:04:41 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 18:37:48 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/27 17:45:49 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 // Skips ALL preceding characters according to params
-static void	skip_preceding(t_atox *d)
+static void	skip_preceding(t_atox *d, int *i)
 {
-	while (d->skip_spaces && ft_isspace(*d->str))
-		d->str++;
-	while (d->multiple_signs && ((d->is_signed && *d->str == '-')
-			|| (d->skip_plus && *d->str == '+')))
+	while (d->skip_spaces && ft_isspace(d->str[*i]))
+		(*i)++;
+	while (d->multiple_signs && ((d->is_signed && d->str[*i] == '-')
+			|| (d->skip_plus && d->str[*i] == '+')))
 	{
-		if (*d->str == '-')
+		if (d->str[*i] == '-')
 			d->neg = !d->neg;
-		d->str++;
+		(*i)++;
 	}
-	if ((d->is_signed && *d->str == '-') || (d->skip_plus && *d->str == '+'))
+	if ((d->is_signed && d->str[*i] == '-')
+		|| (d->skip_plus && d->str[*i] == '+'))
 	{
-		if (*d->str == '-')
+		if (d->str[*i] == '-')
 			d->neg = !d->neg;
-		d->str++;
+		(*i)++;
 	}
-	if (d->skip_prefix && *d->str == '0'
-		&& ((d->baselen == 2 && (d->str[1] == 'b' || d->str[1] == 'B'))
-			|| (d->baselen == 16 && (d->str[1] == 'x' || d->str[1] == 'X'))))
-		d->str += 2;
-	else if (d->skip_prefix && d->baselen == 8 && *d->str == '0')
-		d->str++;
+	if (d->skip_prefix && d->str[*i] == '0'
+		&& ((d->baselen == 2
+				&& (d->str[*i + 1] == 'b' || d->str[*i + 1] == 'B'))
+			|| (d->baselen == 16
+				&& (d->str[*i + 1] == 'x' || d->str[*i + 1] == 'X'))))
+		(*i) += 2;
+	else if (d->skip_prefix && d->baselen == 8 && d->str[*i] == '0')
+		(*i)++;
 }
 
 static void	init_atox(t_atox *d)
@@ -69,8 +72,9 @@ static int	is_base_valid(t_atox d)
  *
  * - Converts a string into a signed or unsigned numerical value
  * - Accepts any base (up to 256 length)
- * - Accepts any type (char, intmax_t, custom type... up to 65535 length)
+ * - Accepts any type (char, intmax_t, custom type... up to 65535 size)
  * - Wards against overflow, no matter the type, signed/unsigned
+ * - Returns how far it got into the string (even in case of error)
  * - Flexible, can tell it to behave one way or another when parsing string
  *	(skip spaces or not, allow multiple preceding signs or not, etc...)
  *
@@ -120,9 +124,23 @@ static int	is_base_valid(t_atox d)
  * Use ATOX_LAX to set all bits (except signed/unsigned) to 1.
  *
  *	Returns:
- * 0		Success - The string is valid and the variable contains the result
- * 1		Failure - The string is invalid (see reasons), the var may contain
- * 						anything.
+ * >= 0	Success: String is valid and the variable contains the result
+ * < 0	Failure: String is invalid (see reasons), the var may contain anything.
+ * - The return value ALWAYS tells you whether or not ft_atox was successful.
+ * - The return value TRIES to also tell you how far it got into the string.
+ * - Its absolute value will ALMOST ALWAYS be how far it got into the string.
+ * - However, if ft_atox failed at the first character in the string, it will
+ *		default to returning -1, to indicate an error, even if it didn't get
+ *		1 character deep into the string.
+ * E.g
+ *	"123nonsense" returns (for base 10):
+ *		3	if ATOX_TR was set
+ *		-3	otherwise
+ *	"" returns:
+ *		0	if ATOX_ABS was set
+ *		-1	otherwise (as there is no other way to indicate an error)
+ * This behavior, while remaining imperfect due to technical limitations,
+ *	should still prove useful to string-parsing operations.
  *
  *	Possible reasons for failure:
  * 1. One or several args were bad (e.g NULL pointer)
@@ -138,22 +156,29 @@ static int	is_base_valid(t_atox d)
 int	ft_atox(char *str, char *base, void *var, int params)
 {
 	t_atox			d;
+	int				i;
 
 	if (!base)
 		base = BASE10;
 	d.baselen = ft_strlen(base);
 	d.varlen = (short)params;
 	if (!str || !var || !d.varlen || d.baselen < 2)
-		return (1);
+		return (-1);
 	d.str = str;
 	d.base = base;
 	d.var = var;
 	d.params = params;
 	init_atox(&d);
 	if (!is_base_valid(d))
-		return (1);
-	skip_preceding(&d);
+		return (-1);
+	i = 0;
+	skip_preceding(&d, &i);
 	ft_memset(d.var, 0, d.varlen);
-	return (ft_atox_convert(&d));
+	if (ft_atox_convert(&d, &i))
+	{
+		if (i)
+			return (-i);
+		return (-1);
+	}
+	return (i);
 }
-// LAST ERROR: a single 0 is invalid without ATOX_ZERO

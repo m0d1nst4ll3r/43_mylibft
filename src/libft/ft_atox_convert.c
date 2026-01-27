@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:23:19 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/27 14:25:45 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/27 17:43:10 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,27 @@ static int	mult(t_atox d, unsigned char mult)
 	return (0);
 }
 
-int	ft_atox_convert(t_atox *d)
+int	ft_atox_convert(t_atox *d, int *i)
 {
-	if (!d->skip_zeros && *d->str == *d->base && d->str[1]
-		&& ((d->ignore_case && ft_strchr_case(d->base, d->str[1]))
-			|| (!d->ignore_case && ft_strchr(d->base, d->str[1]))))
+	if (!d->skip_zeros && d->str[*i] == *d->base && d->str[*i + 1]
+		&& ((d->ignore_case && ft_strchr_case(d->base, d->str[*i + 1]))
+			|| (!d->ignore_case && ft_strchr(d->base, d->str[*i + 1]))))
 		return (1);
-	while (*d->str)
+	while (d->str[*i])
 	{
 		if (d->ignore_case)
-			d->base_i = ft_strchr_case(d->base, *d->str);
+			d->base_i = ft_strchr_case(d->base, d->str[*i]);
 		else
-			d->base_i = ft_strchr(d->base, *d->str);
+			d->base_i = ft_strchr(d->base, d->str[*i]);
 		if (!d->base_i)
 			break ;
 		if (!d->has_digit)
 			d->has_digit = 1;
 		if (mult(*d, d->baselen) || add(*d, d->base_i - d->base))
 			return (1);
-		d->str++;
+		(*i)++;
 	}
-	if ((!d->has_digit && !d->nonum_ok) || (*d->str && !d->allow_extra))
+	if ((!d->has_digit && !d->nonum_ok) || (d->str[*i] && !d->allow_extra))
 		return (1);
 	if (d->neg)
 		negative(*d);

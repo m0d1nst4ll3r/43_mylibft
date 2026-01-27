@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 18:24:38 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/27 17:51:04 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_select_sort(int *arr, int len);
 void	ft_free(void **p);
 
 // ft_atox extension
-int		ft_atox_convert(t_atox *d);
+int		ft_atox_convert(t_atox *d, int *i);
 int		ft_atox(char *s, char *base, void *var, int params);
 
 #endif
