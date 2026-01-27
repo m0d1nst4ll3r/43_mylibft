@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:23:19 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/23 18:23:38 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:23:24 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ static int	mult(t_atox d, unsigned char mult)
 
 int	ft_atox_convert(t_atox *d)
 {
-	if (!d->skip_zeros && *d->str == *d->base)
+	if (!d->skip_zeros && *d->str == *d->base && d->str[1]
+			&& ((d->ignore_case && ft_strchr_case(d->base, d->str[1]))
+			|| (!d->ignore_case && ft_strchr(d->base, d->str[1]))))
 		return (1);
 	while (*d->str)
 	{
