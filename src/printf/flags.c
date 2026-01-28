@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:21:43 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 11:19:16 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:56:57 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	get_len2(t_printf *d, const char *s)
 	}
 }
 
-void	get_len(t_printf *d)
+void	printf_get_len(t_printf *d)
 {
 	const char	*s;
 
@@ -65,7 +65,7 @@ void	get_len(t_printf *d)
 		get_len2(d, s);
 }
 
-void	get_flags(t_printf *d)
+void	printf_get_flags(t_printf *d)
 {
 	while (ft_strchr(FTP_FLAGS, d->s[d->str_i + d->conv_i]))
 	{
@@ -83,12 +83,12 @@ void	get_flags(t_printf *d)
 	}
 }
 
-void	get_width(t_printf *d)
+void	printf_get_width(t_printf *d)
 {
 	d->width = printf_atoi(d, d->s + d->str_i + d->conv_i);
 }
 
-void	get_prec(t_printf *d)
+void	printf_get_prec(t_printf *d)
 {
 	if (d->s[d->str_i + d->conv_i] == '.')
 	{

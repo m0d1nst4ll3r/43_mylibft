@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:39:03 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 11:29:45 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:01:35 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static uintmax_t	get_arg(t_printf *d)
 // Meaning:
 //		a. Value is 0 BUT the 0 is suppressed by a precision of 0
 //		b. Value is not 0 AND width or precision did not add any preceding 0
-void	get_sign_o(t_printf *d, uintmax_t arg)
+static void	get_sign_o(t_printf *d, uintmax_t arg)
 {
 	if ((d->flags & FTP_HASH))
 	{
@@ -107,7 +107,7 @@ void	convert_boux(t_printf *d)
 	if (d->conv == 'o')
 		get_sign_o(d, arg);
 	else
-		get_sign(d, arg);
+		printf_get_sign(d, arg);
 	if (!(d->flags & FTP_ZERO || d->flags & FTP_DASH) && d->width > 0)
 		print_width(d);
 	convert_boux_2(d, arg);

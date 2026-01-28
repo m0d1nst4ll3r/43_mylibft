@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 15:03:44 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 12:27:45 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:01:50 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	convert_p(t_printf *d)
 	void	*arg;
 
 	arg = get_arg(d);
-	get_sign(d, (intmax_t)arg);
+	printf_get_sign(d, (intmax_t)arg);
 	d->arg_len = FTP_NILLEN;
 	if (arg)
 		d->arg_len = printf_tobase((uintmax_t)arg, d->conv_buf, FTP_HEX);

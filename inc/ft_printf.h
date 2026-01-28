@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:58:43 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/12/15 20:49:36 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:57:47 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,17 +140,17 @@ void	print_prec(t_printf *d);
 int		printf_atoi(t_printf *d, const char *s);
 int		printf_itoa(intmax_t n, char *buf);
 int		printf_tobase(uintmax_t n, char *buf, char *base);
-void	get_sign(t_printf *d, intmax_t arg);
+void	printf_get_sign(t_printf *d, intmax_t arg);
 
 // buffer
 void	flush_buf(t_printf *d);
 void	write_buf(t_printf *d, char c);
 
 // flags
-void	get_flags(t_printf *d);
-void	get_width(t_printf *d);
-void	get_prec(t_printf *d);
-void	get_len(t_printf *d);
+void	printf_get_flags(t_printf *d);
+void	printf_get_width(t_printf *d);
+void	printf_get_prec(t_printf *d);
+void	printf_get_len(t_printf *d);
 
 // convert
 int		prepare_conv(t_printf *d);

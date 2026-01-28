@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:41:09 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 11:40:34 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:01:03 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static void	curate_flags(t_printf *d)
 int	prepare_conv(t_printf *d)
 {
 	init_conv(d);
-	get_flags(d);
-	get_width(d);
-	get_prec(d);
-	get_len(d);
+	printf_get_flags(d);
+	printf_get_width(d);
+	printf_get_prec(d);
+	printf_get_len(d);
 	d->conv = d->s[d->str_i + d->conv_i];
 	d->conv_i++;
 	if (d->conv && ft_strchr(FTP_CONV, d->conv))

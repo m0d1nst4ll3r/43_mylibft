@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:56:44 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 11:32:23 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:02:23 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	convert_di(t_printf *d)
 	intmax_t	arg;
 
 	arg = get_arg(d);
-	get_sign(d, arg);
+	printf_get_sign(d, arg);
 	if (d->prec || arg)
 		d->arg_len = printf_itoa(arg, d->conv_buf);
 	if (!(d->flags & FTP_ZERO || d->flags & FTP_DASH) && d->width > 0)

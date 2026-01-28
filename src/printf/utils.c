@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:24:07 by rapohlen          #+#    #+#             */
-/*   Updated: 2025/11/27 11:34:48 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:58:40 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	printf_tobase(uintmax_t n, char *buf, char *base)
 
 // does sign for di (and later fFeEaAgG)
 // but also does 0x 0b
-void	get_sign(t_printf *d, intmax_t arg)
+void	printf_get_sign(t_printf *d, intmax_t arg)
 {
 	if (d->conv == 'd' || d->conv == 'i')
 	{
