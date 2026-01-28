@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/27 17:51:04 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:37:16 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
 
 int		ft_write(int fd, char *s, int len);
+void	ft_close(int *fd);
 void	ft_select_sort(int *arr, int len);
 void	ft_free(void **p);
 
