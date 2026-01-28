@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/28 11:37:16 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:41:03 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_atox
 	unsigned char	baselen;
 	unsigned char	*var;
 	unsigned short	varlen;
-	int				params;
 	int				neg;
 	char			has_digit;
 	char			is_signed;

@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:04:41 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/27 17:45:49 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:40:47 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ static void	skip_preceding(t_atox *d, int *i)
 		(*i)++;
 }
 
-static void	init_atox(t_atox *d)
+static void	init_atox(t_atox *d, int params)
 {
 	d->neg = 0;
 	d->has_digit = 0;
-	d->is_signed = !(d->params & ATOX_U);
-	d->ignore_case = (d->params & ATOX_CASE) != 0;
-	d->skip_spaces = (d->params & ATOX_SPA) != 0;
-	d->skip_plus = (d->params & ATOX_PLUS) != 0;
-	d->multiple_signs = (d->params & ATOX_MULT) != 0;
-	d->skip_prefix = (d->params & ATOX_PREF) != 0;
-	d->skip_zeros = (d->params & ATOX_ZERO) != 0;
-	d->nonum_ok = (d->params & ATOX_ABS) != 0;
-	d->allow_extra = (d->params & ATOX_TR) != 0;
+	d->is_signed = !(params & ATOX_U);
+	d->ignore_case = (params & ATOX_CASE) != 0;
+	d->skip_spaces = (params & ATOX_SPA) != 0;
+	d->skip_plus = (params & ATOX_PLUS) != 0;
+	d->multiple_signs = (params & ATOX_MULT) != 0;
+	d->skip_prefix = (params & ATOX_PREF) != 0;
+	d->skip_zeros = (params & ATOX_ZERO) != 0;
+	d->nonum_ok = (params & ATOX_ABS) != 0;
+	d->allow_extra = (params & ATOX_TR) != 0;
 }
 
 static int	is_base_valid(t_atox d)
@@ -167,8 +167,7 @@ int	ft_atox(char *str, char *base, void *var, int params)
 	d.str = str;
 	d.base = base;
 	d.var = var;
-	d.params = params;
-	init_atox(&d);
+	init_atox(&d, params);
 	if (!is_base_valid(d))
 		return (-1);
 	i = 0;
