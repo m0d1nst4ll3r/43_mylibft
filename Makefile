@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/01/28 11:37:25 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/02/02 16:10:52 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,10 @@ CFILES_LIBFT	= ft_isspace.c \
 				  ft_max.c \
 				  ft_write.c \
 				  ft_close.c \
-				  ft_atoi_strict.c \
-				  ft_select_sort.c \
 				  ft_free.c \
-				  ft_atox_convert.c ft_atox.c
+				  ft_select_sort.c \
+				  ft_atox_convert.c ft_atox.c \
+				  ft_time_diff.c
 CFILES_PRINTF	= ft_printf.c \
 				  buffer.c \
 				  flags.c \
