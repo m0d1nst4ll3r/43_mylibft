@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/02/02 16:10:52 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/02/10 20:50:39 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,7 @@ INC				= inc
 # Compiler settings
 CC				= cc
 AR				= ar rcs
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -O3
 CPPFLAGS		= $(addprefix -I,$(INC)) -MMD -MP
 MAKEFLAGS		+= --no-print-directory
 MAKEFLAGS		:= $(MAKEFLAGS) $(if $(filter -j%,$(MAKEFLAGS)),,-j)
