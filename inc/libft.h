@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/02/02 16:18:11 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/02/16 01:53:29 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void			ft_close(int *fd);
 void			ft_select_sort(int *arr, int len);
 void			ft_free(void **p);
 
-unsigned int	ft_time_diff(struct timeval val, struct timeval sub);
+int				ft_time_sub(struct timeval val, struct timeval sub);
+struct timeval	ft_time_add(struct timeval time, unsigned int usec);
 
 // ft_atox extension
 int				ft_atox_convert(t_atox *d, int *i);
