@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/02/16 01:53:29 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/02/16 05:37:54 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ struct timeval	ft_time_add(struct timeval time, unsigned int usec);
 
 // ft_atox extension
 int				ft_atox_convert(t_atox *d, int *i);
-int				ft_atox(char *s, char *base, void *var, int params);
+int				ft_atox(char *to_convert, char *base, void *to_write,
+					int params);
 
 #endif

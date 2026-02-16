@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:04:41 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/01/28 11:40:47 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/02/16 04:23:47 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,6 @@ static void	init_atox(t_atox *d, int params)
 	d->skip_zeros = (params & ATOX_ZERO) != 0;
 	d->nonum_ok = (params & ATOX_ABS) != 0;
 	d->allow_extra = (params & ATOX_TR) != 0;
-}
-
-static int	is_base_valid(t_atox d)
-{
-	while (*d.base)
-	{
-		if ((!d.is_signed && *d.base == '-')
-			|| (!d.skip_plus && *d.base == '+'))
-			return (0);
-		d.base++;
-	}
-	return (1);
 }
 
 /*		ft_atox(char *to_convert, char *base, void *to_write, int params)
@@ -143,14 +131,13 @@ static int	is_base_valid(t_atox d)
  *	should still prove useful to string-parsing operations.
  *
  *	Possible reasons for failure:
- * 1. One or several args were bad (e.g NULL pointer)
- * 2. The string's value overflowed the desired type's size
- * 3. The string contained invalid characters according to params
+ * 1. The string's value overflowed the desired type's size
+ * 2. The string contained invalid characters according to params
  *
  *	Notes:
- * - Bases cannot contain '-' and '+' unless they were disabled in params
+ * - Arguments are not checked for errors (to save on compute) - be sensible
  * - A preceding '-' is always invalid when reading an unsigned value
- * - Max base length is 256
+ * - Max base length is 255
  * - Max variable size is 65535
 */
 int	ft_atox(char *str, char *base, void *var, int params)
@@ -162,14 +149,10 @@ int	ft_atox(char *str, char *base, void *var, int params)
 		base = BASE10;
 	d.baselen = ft_strlen(base);
 	d.varlen = (short)params;
-	if (!str || !var || !d.varlen || d.baselen < 2)
-		return (-1);
 	d.str = str;
 	d.base = base;
 	d.var = var;
 	init_atox(&d, params);
-	if (!is_base_valid(d))
-		return (-1);
 	i = 0;
 	skip_preceding(&d, &i);
 	ft_memset(d.var, 0, d.varlen);
