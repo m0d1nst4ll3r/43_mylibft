@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 01:35:11 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/02/16 01:39:40 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:49:52 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,10 @@ struct timeval	ft_time_add(struct timeval time, unsigned int usec)
 {
 	time.tv_sec += usec / 1000000;
 	time.tv_usec += usec % 1000000;
+	if (time.tv_usec > 1000000)
+	{
+		time.tv_sec++;
+		time.tv_usec -= 1000000;
+	}
 	return (time);
 }
