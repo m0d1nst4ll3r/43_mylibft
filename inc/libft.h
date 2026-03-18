@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/03/18 16:55:07 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/03/18 16:57:50 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char			*ft_strstr(const char *b, const char *l);
 void			*ft_memset(void *s, int c, size_t n);
 void			*ft_memcpy(void *d, const void *s, size_t n);
 
-size_t			ft_strcpy(char *d, const char *s);
+char			*ft_strcpy(char *d, const char *s);
 size_t			ft_strlcpy(char *d, const char *s, size_t n);
 char			*ft_strcat(char *d, const char *s);
 char			*ft_strdup(const char *s);
