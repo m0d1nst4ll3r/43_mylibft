@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/05/30 16:50:49 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/05/30 22:54:40 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char			*ft_strchr_case(char *s, char c);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strstr(const char *b, const char *l);
+int				ft_str_is_empty(char *s);
 
 void			*ft_memset(void *s, int c, size_t n);
 void			*ft_memcpy(void *d, const void *s, size_t n);
