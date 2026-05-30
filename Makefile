@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/02/16 01:41:24 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/05/30 16:51:04 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ CFILES_LIBFT	= ft_isspace.c \
 				  ft_substr.c \
 				  ft_strjoin.c \
 				  ft_split.c \
+				  ft_ssplit.c \
 				  ft_itoa.c \
 				  ft_abs.c \
 				  ft_min.c \

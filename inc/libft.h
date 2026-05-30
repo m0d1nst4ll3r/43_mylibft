@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/03/18 16:57:50 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/05/30 16:50:49 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char			*ft_substr(const char *s, unsigned int start, size_t len);
 char			*ft_strjoin(const char *s1, const char *s2);
 char			*ft_strtrim(const char *s, const char *set);
 char			**ft_split(const char *s, char c);
+char			**ft_ssplit(const char *s, char *list);
 char			*ft_itoa(int n);
 
 int				ft_write(int fd, char *s, int len);
