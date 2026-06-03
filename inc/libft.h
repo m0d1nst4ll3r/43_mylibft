@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/05/30 22:54:40 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/06/03 13:37:06 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>
+# include <errno.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
 
@@ -73,6 +74,12 @@ typedef struct s_atox
 	char			nonum_ok;
 	char			allow_extra;
 }	t_atox;
+
+typedef struct s_file_contents
+{
+	char					*line;
+	struct s_file_contents	*next;
+}	t_file_contents;
 
 int				ft_isspace(char c);
 int				ft_isdigit(char c);
@@ -125,5 +132,8 @@ struct timeval	ft_time_add(struct timeval time, unsigned int usec);
 int				ft_atox_convert(t_atox *d, int *i);
 int				ft_atox(char *to_convert, char *base, void *to_write,
 					int params);
+
+t_file_contents	*get_file(int fd);
+void			free_file_contents(t_file_contents *contents);
 
 #endif
