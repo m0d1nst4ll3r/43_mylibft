@@ -1,22 +1,22 @@
 #include "libft.h"
 
 // Public helper
-void	free_file_contents(t_file_contents *contents)
+void	free_file(t_file *file)
 {
-	t_file_contents	*last;
+	t_file	*last;
 
-	while (contents)
+	while (file)
 	{
-		last = contents;
-		contents = contents->next;
+		last = file;
+		file = file->next;
 		free(last->line);
 		free(last);
 	}
 }
 
-static t_file_contents	*new_node(char *line)
+static t_file	*new_node(char *line)
 {
-	t_file_contents	*new;
+	t_file	*new;
 
 	new = malloc(sizeof(*new));
 	if (!new)
@@ -27,29 +27,29 @@ static t_file_contents	*new_node(char *line)
 }
 
 // This function resets errno to 0 before working
-t_file_contents	*get_file(int fd)
+t_file	*get_file(int fd)
 {
-	char			*line;
-	t_file_contents	*contents;
-	t_file_contents	*cur;
-	t_file_contents	*last;
+	char	*line;
+	t_file	*file;
+	t_file	*cur;
+	t_file	*last;
 
 	errno = 0;
-	contents = NULL;
+	file = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (errno)
-			return (free_file_contents(contents), NULL);
+			return (free_file(file), NULL);
 		if (!line)
-			return (contents);
+			return (file);
 		cur = new_node(line);
 		if (!cur)
-			return (free_file_contents(contents), NULL);
-		if (contents)
+			return (free_file(file), NULL);
+		if (file)
 			last->next = cur;
 		else
-			contents = cur;
+			file = cur;
 		last = cur;
 	}
 }

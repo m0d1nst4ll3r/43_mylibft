@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/06/03 13:37:06 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:09:58 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ typedef struct s_atox
 	char			allow_extra;
 }	t_atox;
 
-typedef struct s_file_contents
+typedef struct s_file
 {
-	char					*line;
-	struct s_file_contents	*next;
-}	t_file_contents;
+	char			*line;
+	struct s_file	*next;
+}	t_file;
 
 int				ft_isspace(char c);
 int				ft_isdigit(char c);
@@ -133,7 +133,7 @@ int				ft_atox_convert(t_atox *d, int *i);
 int				ft_atox(char *to_convert, char *base, void *to_write,
 					int params);
 
-t_file_contents	*get_file(int fd);
-void			free_file_contents(t_file_contents *contents);
+t_file			*get_file(int fd);
+void			free_file(t_file *file);
 
 #endif
