@@ -36,7 +36,6 @@ t_file_contents	*get_file(int fd)
 
 	errno = 0;
 	contents = NULL;
-	last = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
