@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/08 10:29:07 by rapohlen          #+#    #+#              #
-#    Updated: 2026/06/03 13:36:36 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/06/14 18:32:32 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ CFILES_LIBFT	= ft_isspace.c \
 				  ft_time_sub.c \
 				  ft_time_add.c \
 				  ft_str_is_empty.c \
-				  get_file.c
+				  get_file.c \
+				  get_time.c
 CFILES_PRINTF	= ft_printf.c \
 				  buffer.c \
 				  flags.c \

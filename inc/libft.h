@@ -6,7 +6,7 @@
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:08:36 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/06/12 17:09:58 by rapohlen         ###   ########.fr       */
+/*   Updated: 2026/06/14 18:33:16 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 // Forbid all
 # define ATOX_STRICT	0
 
+# include <sys/time.h>
 # include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>
@@ -127,6 +128,7 @@ void			ft_free(void **p);
 
 int				ft_time_sub(struct timeval val, struct timeval sub);
 struct timeval	ft_time_add(struct timeval time, unsigned int usec);
+long			get_time(void);
 
 // ft_atox extension
 int				ft_atox_convert(t_atox *d, int *i);

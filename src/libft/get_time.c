@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_empty.c                                  :+:      :+:    :+:   */
+/*   get_time.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/14 18:34:05 by rapohlen          #+#    #+#             */
-/*   Updated: 2026/06/14 18:34:06 by rapohlen         ###   ########.fr       */
+/*   Created: 2026/06/14 18:33:51 by rapohlen          #+#    #+#             */
+/*   Updated: 2026/06/14 18:33:52 by rapohlen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// String is empty if it only contains spaces or newlines
-int	ft_str_is_empty(char *s)
+long	get_time(void)
 {
-	int	i;
+	struct timeval	time;
 
-	i = 0;
-	while (s[i] == ' ' || s[i] == '\n')
-		i++;
-	return (!s[i]);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000000 + time.tv_usec);
 }
